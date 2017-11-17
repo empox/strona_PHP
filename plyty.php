@@ -1,10 +1,11 @@
 <?php
 session_start();
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<!DOCTYPE HTML>
+
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Type" content="text/html"; charset="utf-8" />
   <title>Płytoteka</title>
 
   <meta name="description" content="" />
@@ -34,43 +35,9 @@ session_start();
 <div class="main">
   <div class="sidebar_spacer">
   <div class="section sidebar">
-    <?php
-     
-
-
-	if ($_SESSION['log']){
-	 echo '<ul class="menu">
-        <li class="first selected"><a href="index.php">Strona główna</a></li>
-        <li><a href="plyty.php">Płyty</a></li>
-		<li><a href="albumy.php">Albumy</a></li>
-        <li><a href="wykonawcy.php">Wykonawcy</a></li>
-		<li><a href="zestawienia.php">Zestawienia</a></li>
-		<li><a href="slowniki.php">Słowniki</a></li>
-        <li><a href="szukaj.php">Szukaj</a></li>
-        <li><a href="wyloguj.php">Wyloguj</a></li>
-        <!--<li class="first"><a href="#">Bibendum quist</a></li>-->
-      </ul>
-      <div id="sidebar_dec"></div>
-    <div class="clear"></div>
-  </div>
-  </div>';
-  }
-  else{
-  echo '<ul class="menu">
-        <li class="first selected"><a href="index.php">Strona główna</a></li>
-        <li><a href="plyty.php">Płyty</a></li>
-		<li><a href="albumy.php">Albumy</a></li>
-        <li><a href="wykonawcy.php">Wykonawcy</a></li>
-		<li><a href="zestawienia.php">Zestawienia</a></li>
-        <li><a href="szukaj.php">Szukaj</a></li>
-        <li><a href="login.php">Zaloguj</a></li>
-        <!--<li class="first"><a href="#">Bibendum quist</a></li>-->
-      </ul>
-      <div id="sidebar_dec"></div>
-    <div class="clear"></div>
-  </div>
-  </div>';
-  }
+   
+   <?php
+    include 'menu.php';
   ?>
   
   
@@ -88,7 +55,7 @@ session_start();
 $spis=array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","R","S","T","U","W","X","Y","Z");
 $licz=count($spis);
 
-if ($_SESSION['log']){
+if (isset($_SESSION['log'])){
 echo "<h1>Płytoteka&nbsp&nbsp <a href=\"formPlyt.php?op=0\"><img src=\"dodaj.png\" ></a></h1>";
 }
 else{
@@ -111,7 +78,8 @@ for($i=0;$i<=$licz-1;$i++){
 
 	}
 	echo '';
-$pl=$_GET['pl'];
+	
+$pl=isset($_GET['pl']);
 echo "<a href=\"plyty.php?pl=9\">[0-9]</a>";
 echo '</p><br/>';
 if($pl==9){
@@ -125,7 +93,7 @@ echo '<br/>';
 
 
 
-$dana=$_POST['nazwa']; 
+$dana=isset($_POST['nazwa']); 
 if (empty($_POST['nazwa'])){
 
 }
@@ -168,7 +136,7 @@ echo "<table>";
 
 $query = mysql_query($select);
 while ($wiersz = mysql_fetch_object($query)){
-if ($_SESSION['log']){
+if (isset($_SESSION['log'])){
 echo "<tr><td><h4><a href=\"spisU.php?idp=".$wiersz->ID, "\"> ".$wiersz->TYTUL."</a></h4>  <td><h4><a href=\"usuwaniePlyt.php?idp=$wiersz->ID&op=0\">&nbsp&nbsp<img src=\"usun2m.png\"></a></h4></td> <td><h4><a href=\"formPlyt.php?idp=$wiersz->ID&op=1\">&nbsp&nbsp<img src=\"popraw.png\"></a></h4></td></tr>\n\r";
 }
 else{
@@ -184,7 +152,8 @@ echo "</table>";
 //echo '</form>';
 
 mysql_free_result($query);
-mysql_close($baza);
+mysql_close($polacz);
+//mysql_close($baza);
 }
 
 
